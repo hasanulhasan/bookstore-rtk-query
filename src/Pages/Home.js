@@ -6,7 +6,7 @@ import { changeFeatured } from '../features/filterSlice';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { isFeatured, searchParam } = useSelector(state => state.filter)
+  const { isFeatured, search } = useSelector(state => state.filter)
   const { data: books, isLoading, isError, error } = useGetBooksQuery();
   const handleFilter = () => {
     dispatch(changeFeatured(!isFeatured))
@@ -26,7 +26,7 @@ const Home = () => {
       else {
         return book
       }
-    }).map(book => <Book key={book.id} book={book} />)
+    }).filter(book => book.name.toLowerCase().includes(search.toLowerCase())).map(book => <Book key={book.id} book={book} />)
   }
 
   return (
@@ -36,8 +36,8 @@ const Home = () => {
           <h4 className="mt-2 text-xl font-bold">Book List</h4>
 
           <div className="flex items-center space-x-4">
-            <button onClick={handleFilter} className="lws-filter-btn active-filter">All</button>
-            <button onClick={handleFilter} className="lws-filter-btn">Featured</button>
+            <button onClick={handleFilter} className={`lws-filter-btn ${!isFeatured && 'active-filter'}`}>All</button>
+            <button onClick={handleFilter} className={`lws-filter-btn ${isFeatured && 'active-filter'}`}>Featured</button>
           </div>
         </div>
         <div className="space-y-6 md:space-y-0 md:grid grid-cols-1 lg:grid-cols-3 gap-6">
