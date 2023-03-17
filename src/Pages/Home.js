@@ -1,9 +1,17 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Book from '../components/Book';
 import { useGetBooksQuery } from '../features/api/apiSlice';
+import { changeFeatured } from '../features/filterSlice';
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const { isFeatured, searchParam } = useSelector(state => state.filter)
   const { data: books, isLoading, isError, error } = useGetBooksQuery();
+  const handleFilter = () => {
+    dispatch(changeFeatured(!isFeatured))
+  }
+
   let content = null;
   if (isLoading) content = <div>Loading..</div>;
   if (!isLoading && isError) content = <div>There was an error..</div>;
@@ -11,7 +19,14 @@ const Home = () => {
     content = <div>There was no book</div>;
   }
   if (!isLoading && !isError && books?.length > 0) {
-    content = books.map(book => <Book key={book.id} book={book} />)
+    content = books.filter(book => {
+      if (isFeatured) {
+        return book.featured
+      }
+      else {
+        return book
+      }
+    }).map(book => <Book key={book.id} book={book} />)
   }
 
   return (
@@ -21,8 +36,8 @@ const Home = () => {
           <h4 className="mt-2 text-xl font-bold">Book List</h4>
 
           <div className="flex items-center space-x-4">
-            <button className="lws-filter-btn active-filter">All</button>
-            <button className="lws-filter-btn">Featured</button>
+            <button onClick={handleFilter} className="lws-filter-btn active-filter">All</button>
+            <button onClick={handleFilter} className="lws-filter-btn">Featured</button>
           </div>
         </div>
         <div className="space-y-6 md:space-y-0 md:grid grid-cols-1 lg:grid-cols-3 gap-6">

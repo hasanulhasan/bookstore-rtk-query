@@ -31,7 +31,6 @@ const AddBook = () => {
     navigate('/')
   }
 
-
   return (
     <main className="py-6 2xl:px-6">
       <div className="container">
