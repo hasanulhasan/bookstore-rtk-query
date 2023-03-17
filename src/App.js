@@ -4,7 +4,7 @@ import './App.css'
 import Navbar from './components/Navbar';
 import AddBook from './Pages/AddBook';
 import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
-import EditBook from './Pages/EditBook';
+import Edit from './Pages/Edit';
 function App() {
   return (
     <BrowserRouter>
@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/books/add" element={<AddBook />} />
-        <Route path="/books/edit/:bookId" element={<EditBook />} />
+        <Route path="/books/edit/:bookId" element={<Edit />} />
       </Routes>
     </BrowserRouter>
   );

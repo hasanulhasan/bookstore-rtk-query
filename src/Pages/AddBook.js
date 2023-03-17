@@ -17,7 +17,8 @@ const AddBook = () => {
     setName('')
     setAuthor('')
     setThumbnail('')
-    setPrice('');
+    setPrice('')
+    setRating('')
     setFeatured(false)
   }
 
