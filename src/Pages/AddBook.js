@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAddBookMutation } from '../features/api/apiSlice';
 
 const AddBook = () => {
+  const navigate = useNavigate();
   const [addBook, { isLoading, isError, isSuccess }] = useAddBookMutation();
 
   const [name, setName] = useState('');
@@ -25,6 +27,7 @@ const AddBook = () => {
       name, author, thumbnail, price, rating, featured
     })
     resetForm();
+    navigate('/')
   }
 
 
